@@ -1,0 +1,9 @@
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	co = checkout
+	st = status
+[user]
+	name = Francesco Valente
+	email = francesco83.valente@gmail.com
+[branch]
+	autosetuprebase = always
