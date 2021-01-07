@@ -1,0 +1,12 @@
+{
+  "segments": [
+    "node_version", 
+    "username", 
+    "ssh", 
+    "cwd", 
+    "git", 
+    "hg", 
+    "jobs", 
+    "root"
+  ]
+}
