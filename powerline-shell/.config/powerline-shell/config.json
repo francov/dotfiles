@@ -8,5 +8,6 @@
     "hg", 
     "jobs", 
     "root"
-  ]
+  ],
+  "theme": "~/.config/powerline-shell/custom-theme.py"
 }

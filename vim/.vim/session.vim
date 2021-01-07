@@ -207,9 +207,11 @@ map gp :bp
 map gn :bn
 omap ic <Plug>TComment_ic
 vmap ic <Plug>TComment_ic
+nnoremap <SNR>102_: :=v:count ? v:count : ''
 vnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote(netrw#GX()))
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())
 nnoremap <silent> <Plug>(ale_repeat_selection) :ALERepeatSelection
+nnoremap <silent> <Plug>(ale_code_action) :ALECodeAction
 nnoremap <silent> <Plug>(ale_rename) :ALERename
 nnoremap <silent> <Plug>(ale_import) :ALEImport
 nnoremap <silent> <Plug>(ale_documentation) :ALEDocumentation
@@ -512,7 +514,7 @@ set laststatus=2
 set mouse=a
 set printoptions=paper:a4
 set ruler
-set runtimepath=~/.vim,~/.vim/bundle/Vundle.vim,~/.vim/bundle/vundle,~/.vim/bundle/vim-fugitive,~/.vim/bundle/vim-gitgutter,~/.vim/bundle/ctrlp.vim,~/.vim/bundle/tComment,~/.vim/bundle/vim-airline,~/.vim/bundle/nerdtree,~/.vim/bundle/vim-javascript,~/.vim/bundle/vim-jsx,~/.vim/bundle/tabular,~/.vim/bundle/vim-markdown,~/.vim/bundle/emmet-vim,~/.vim/bundle/ale,~/.vim/bundle/json5.vim,/var/lib/vim/addons,/etc/vim,/usr/share/vim/vimfiles,/usr/share/vim/vim82,/usr/share/vim/vimfiles/after,/etc/vim/after,/var/lib/vim/addons/after,~/.vim/after,~/.vim/bundle/Vundle.vim,~/.vim/bundle/Vundle.vim/after,~/.vim/bundle/vundle/after,~/.vim/bundle/vim-fugitive/after,~/.vim/bundle/vim-gitgutter/after,~/.vim/bundle/ctrlp.vim/after,~/.vim/bundle/tComment/after,~/.vim/bundle/vim-airline/after,~/.vim/bundle/nerdtree/after,~/.vim/bundle/vim-javascript/after,~/.vim/bundle/vim-jsx/after,~/.vim/bundle/tabular/after,~/.vim/bundle/vim-markdown/after,~/.vim/bundle/emmet-vim/after,~/.vim/bundle/ale/after,~/.vim/bundle/json5.vim/after
+set runtimepath=~/.vim,~/.vim/bundle/Vundle.vim,~/.vim/bundle/vundle,~/.vim/bundle/vim-fugitive,~/.vim/bundle/vim-gitgutter,~/.vim/bundle/ctrlp.vim,~/.vim/bundle/tComment,~/.vim/bundle/vim-airline,~/.vim/bundle/nerdtree,~/.vim/bundle/vim-javascript,~/.vim/bundle/vim-jsx,~/.vim/bundle/tabular,~/.vim/bundle/vim-markdown,~/.vim/bundle/emmet-vim,~/.vim/bundle/ale,~/.vim/bundle/json5.vim,/var/lib/vim/addons,/etc/vim,/usr/share/vim/vimfiles,/usr/share/vim/vim81,/usr/share/vim/vimfiles/after,/etc/vim/after,/var/lib/vim/addons/after,~/.vim/after,~/.vim/bundle/Vundle.vim,~/.vim/bundle/Vundle.vim/after,~/.vim/bundle/vundle/after,~/.vim/bundle/vim-fugitive/after,~/.vim/bundle/vim-gitgutter/after,~/.vim/bundle/ctrlp.vim/after,~/.vim/bundle/tComment/after,~/.vim/bundle/vim-airline/after,~/.vim/bundle/nerdtree/after,~/.vim/bundle/vim-javascript/after,~/.vim/bundle/vim-jsx/after,~/.vim/bundle/tabular/after,~/.vim/bundle/vim-markdown/after,~/.vim/bundle/emmet-vim/after,~/.vim/bundle/ale/after,~/.vim/bundle/json5.vim/after
 set shiftwidth=2
 set showcmd
 set showtabline=2
@@ -532,15 +534,15 @@ let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~
+cd ~/dotfiles
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd .vimrc
-edit .vimrc
+$argadd .gitignore
+edit .gitignore
 set splitbelow splitright
 wincmd t
 set winminheight=0
@@ -551,23 +553,11 @@ argglobal
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
-vnoremap <buffer> <silent> [" :exe "normal! gv"|call search('\%(^\s*".*\n\)\%(^\s*"\)\@!', "bW")
-nnoremap <buffer> <silent> [" :call search('\%(^\s*".*\n\)\%(^\s*"\)\@!', "bW")
-vnoremap <buffer> <silent> [] m':exe "normal! gv"|call search('^\s*end\(f\%[unction]\|def\)\>', "bW")
-nnoremap <buffer> <silent> [] m':call search('^\s*end\(f\%[unction]\|def\)\>', "bW")
-vnoremap <buffer> <silent> [[ m':exe "normal! gv"|call search('^\s*\(fu\%[nction]\|def\)\>', "bW")
-nnoremap <buffer> <silent> [[ m':call search('^\s*\(fu\%[nction]\|def\)\>', "bW")
 nmap <buffer> \hp <Plug>(GitGutterPreviewHunk)
 nmap <buffer> \hu <Plug>(GitGutterUndoHunk)
 nmap <buffer> \hs <Plug>(GitGutterStageHunk)
 xmap <buffer> \hs <Plug>(GitGutterStageHunk)
 nmap <buffer> ]c <Plug>(GitGutterNextHunk)
-vnoremap <buffer> <silent> ]" :exe "normal! gv"|call search('^\(\s*".*\n\)\@<!\(\s*"\)', "W")
-nnoremap <buffer> <silent> ]" :call search('^\(\s*".*\n\)\@<!\(\s*"\)', "W")
-vnoremap <buffer> <silent> ][ m':exe "normal! gv"|call search('^\s*end\(f\%[unction]\|def\)\>', "W")
-nnoremap <buffer> <silent> ][ m':call search('^\s*end\(f\%[unction]\|def\)\>', "W")
-vnoremap <buffer> <silent> ]] m':exe "normal! gv"|call search('^\s*\(fu\%[nction]\|def\)\>', "W")
-nnoremap <buffer> <silent> ]] m':call search('^\s*\(fu\%[nction]\|def\)\>', "W")
 xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 let &cpo=s:cpo_save
@@ -588,8 +578,8 @@ setlocal cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
-setlocal comments=sO:\"\ -,mO:\"\ \ ,sO:#\ -,mO:#\ \ ,eO:##,:\",b:#
-setlocal commentstring=\"%s
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -606,8 +596,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal expandtab
-if &filetype != 'vim'
-setlocal filetype=vim
+if &filetype != ''
+setlocal filetype=
 endif
 setlocal fixendofline
 setlocal foldcolumn=0
@@ -621,7 +611,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal formatprg=
 setlocal grepprg=
@@ -629,11 +619,11 @@ setlocal iminsert=0
 setlocal imsearch=-1
 setlocal include=
 setlocal includeexpr=
-setlocal indentexpr=GetVimIndent()
-setlocal indentkeys=0{,0},0),0],:,!^F,o,O,e,=end,=},=else,=cat,=finall,=END,0\\,0=\"\\\ 
+setlocal indentexpr=
+setlocal indentkeys=0{,0},0),0],:,0#,!^F,o,O,e
 setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255,#
-setlocal keywordprg=:help
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
 set linebreak
 setlocal linebreak
 setlocal nolisp
@@ -661,7 +651,6 @@ setlocal noscrollbind
 setlocal scrolloff=-1
 setlocal shiftwidth=2
 setlocal noshortname
-setlocal showbreak=
 setlocal sidescrolloff=-1
 setlocal signcolumn=auto
 setlocal nosmartindent
@@ -670,13 +659,12 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=en
-setlocal spelloptions=
 setlocal statusline=%!airline#statusline(1)
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != 'vim'
-setlocal syntax=vim
+if &syntax != ''
+setlocal syntax=
 endif
 setlocal tabstop=2
 setlocal tagcase=
@@ -685,7 +673,7 @@ setlocal tags=
 setlocal termwinkey=
 setlocal termwinscroll=10000
 setlocal termwinsize=
-setlocal textwidth=78
+setlocal textwidth=0
 setlocal thesaurus=
 setlocal noundofile
 setlocal undolevels=-123456
@@ -698,14 +686,14 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 220 - ((42 * winheight(0) + 21) / 43)
+let s:l = 2 - ((1 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-220
-normal! 0
+2
+normal! 016|
 tabnext 1
-badd +0 .vimrc
+badd +0 .gitignore
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -713,11 +701,10 @@ unlet! s:wipebuf
 set winheight=1 winwidth=20 shortmess=filnxtToOS
 set winminheight=1 winminwidth=1
 let s:sx = expand("<sfile>:p:r")."x.vim"
-if filereadable(s:sx)
+if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
