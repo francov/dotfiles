@@ -1,2 +1,6 @@
 fonts/.local/share/fonts/.uuid
+
 vim/.vim/bundle/*
+vim/.vim/session.vim
+
+powerline-shell/.config/powerline-shell/__pycache__
