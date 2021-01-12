@@ -207,7 +207,7 @@ map gp :bp
 map gn :bn
 omap ic <Plug>TComment_ic
 vmap ic <Plug>TComment_ic
-nnoremap <SNR>102_: :=v:count ? v:count : ''
+nnoremap <SNR>103_: :=v:count ? v:count : ''
 vnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())
 nnoremap <silent> <Plug>(ale_repeat_selection) :ALERepeatSelection
@@ -534,7 +534,7 @@ let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/dotfiles
+cd ~/.dotfiles
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -686,12 +686,12 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 23) / 47)
+let s:l = 3 - ((2 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-2
-normal! 016|
+3
+normal! 017|
 tabnext 1
 badd +0 .gitignore
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
@@ -705,6 +705,7 @@ if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
