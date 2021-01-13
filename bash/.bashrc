@@ -121,19 +121,20 @@ fi
 # set english lang in terminal
 export LC_MESSAGES=C
 
+COLOR_GREY="\033[38;5;246m"
 COLOR_RED="\033[0;31m"
 COLOR_YELLOW="\033[0;33m"
 COLOR_GREEN="\033[0;32m"
+COLOR_ORANGE="\033[38;5;172m"
 COLOR_OCHRE="\033[38;5;95m"
-COLOR_BLUE="\033[0;34m"
+COLOR_DARK_BLUE="\033[38;5;25m"
 COLOR_WHITE="\033[0;37m"
-COLOR_RESET="\033[0m"
 
 function git_color {
   local git_status="$(git status 2> /dev/null)"
 
   if [[ ! $git_status =~ "working tree clean" ]]; then
-    echo -e $COLOR_RED
+    echo -e $COLOR_ORANGE
   elif [[ $git_status =~ "Your branch is ahead of" ]]; then
     echo -e $COLOR_YELLOW
   elif [[ $git_status =~ "nothing to commit" ]]; then
@@ -157,7 +158,24 @@ function git_branch {
   fi
 }
 
-PS1="\[\033[38;5;214m\]\u\[$(tput sgr0)\]:\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;25m\]\w\[$(tput sgr0)\] \[\$(git_color)\]\$(git_branch)\[$(tput sgr0)\]\n\\$> \[$(tput sgr0)\]"
+function node_version {
+  local node_env="$(node --version 2> /dev/null)"
+
+  if [[ ! -z "$node_env" ]]; then
+    echo -e "$COLOR_ORANGE(node $node_env) $(tput sgr0)"
+  fi
+}
+
+function n_jobs {
+  local jobs="$(jobs)"
+
+  if [[ ! -z "$jobs" ]]; then
+    echo -e "$COLOR_ORANGE\j $(tput sgr0)"
+  fi
+}
+
+export NODE_VIRTUAL_ENV_DISABLE_PROMPT=1
+PS1="\$(node_version)\$([ '`id -u`' -eq 0 ] && echo -e '$COLOR_RED')\u\[$(tput sgr0)\]:\[$(tput bold)\]\[$COLOR_DARK_BLUE\]\w\[$(tput sgr0)\] \[\$(git_color)\]\$(git_branch)\[$(tput sgr0)\]\n\[$COLOR_ORANGE\]\$([ \j -gt 0 ] && echo '[\j] ')\[$(tput sgr0)\]\\$> \[$(tput sgr0)\]"
 # END CUSTOM PROMPT
 
 export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
