@@ -157,7 +157,7 @@ function git_branch {
   fi
 }
 
-PS1="\[\033[38;5;71m\]\u\[$(tput sgr0)\]:\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;25m\]\w\[$(tput sgr0)\] \[\$(git_color)\]\$(git_branch)\[$(tput sgr0)\]\n\\$> \[$(tput sgr0)\]"
+PS1="\[\033[38;5;214m\]\u\[$(tput sgr0)\]:\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;25m\]\w\[$(tput sgr0)\] \[\$(git_color)\]\$(git_branch)\[$(tput sgr0)\]\n\\$> \[$(tput sgr0)\]"
 # END CUSTOM PROMPT
 
 export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
