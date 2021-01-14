@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/franco/projects/alca/cookbook-gmc-anagrafica'
-let g:netrw_dirhist_2='/home/franco/projects/alca/cookbook-gmc-anagrafica/recipes'
-let g:netrw_dirhist_3='/home/franco/projects/alca/cookbook-gmc-anagrafica'
-let g:netrw_dirhist_4='/home/franco/projects/alca/webapps-gmc/yate_js_dialer/docs'
-let g:netrw_dirhist_5='/home/franco/projects/alca/webapps-gmc/dip-operators/test/test_models'
