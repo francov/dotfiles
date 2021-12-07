@@ -20,6 +20,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tComment'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
+Plugin 'PhilRunninger/nerdtree-buffer-ops'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'godlygeek/tabular'
@@ -113,13 +115,6 @@ map gsd :sbd<CR>
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" autoclose brackets
-" inoremap " ""<left>
-" inoremap ' ''<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
-
 " Tcomment
 nmap <C-c> gcc
 vmap <C-c> <C-_>b
@@ -128,25 +123,26 @@ set laststatus=2
 set timeoutlen=1000 ttimeoutlen=10
 
 " NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeTabsToggle<CR>
 
 " ale (async linting engine - richiede ambiente node attivo con package prettier installato globale)
+let g:ale_linters = {'javascript': ['eslint']}
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_open_list = 0
-let g:ale_set_balloons = 0
-let g:ale_javascript_eslint_options = '-c ~/.eslintrc'
+let g:ale_set_balloons = 1
+" let g:ale_javascript_eslint_options = '-c .eslintrc.json'
 let g:ale_fixers = {'javascript': ['prettier'], 'json': ['prettier'], 'json5': ['prettier'], 'css': ['prettier'], 'less': ['prettier']}
-"let g:ale_linters = {'javascript': ['eslint', 'flow']}
-let g:ale_linters = {'javascript': ['eslint']}
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5 --no-semi --print-width 120 --jsx-bracket-same-line --arrow-parens avoid'
 map F :ALEFix<cr>
+map E :ALELint<cr>
 
 " ctrlp
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.vagrant/*,*/node_modules/*,*/bower_components/*,*/coverage/*,*/build/*,*/flow-coverage/*,*/flow-typed/*
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.vagrant/*,*/node_modules/*,*/bower_components/*,*/coverage/*,*/build/*,*/flow-coverage/*,*/flow-typed/*,*/dist/*,*/.next/*
 let g:ctrlp_show_hidden = 1
 
 " vim-markdown

@@ -178,4 +178,4 @@ export NODE_VIRTUAL_ENV_DISABLE_PROMPT=1
 PS1="\$(node_version)\$([ '`id -u`' -eq 0 ] && echo -e '$COLOR_RED')\u\[$(tput sgr0)\]:\[$(tput bold)\]\[$COLOR_DARK_BLUE\]\w\[$(tput sgr0)\] \[\$(git_color)\]\$(git_branch)\[$(tput sgr0)\]\n\[$COLOR_ORANGE\]\$([ \j -gt 0 ] && echo '[\j] ')\[$(tput sgr0)\]\\$> \[$(tput sgr0)\]"
 # END CUSTOM PROMPT
 
-export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
