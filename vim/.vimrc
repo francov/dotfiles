@@ -14,23 +14,36 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tComment'
+Plugin 'mhinz/vim-signify'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'PhilRunninger/nerdtree-buffer-ops'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
+Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'mattn/emmet-vim'
 Plugin 'w0rp/ale'
 Plugin 'GutenYe/json5.vim'
+Plugin 'mhartington/oceanic-next'
 
 call vundle#end()
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+" Switch syntax highlighting on, when the terminal has colors
+if &t_Co > 2 || has("gui_running")
+  colorscheme OceanicNext
+  syntax on
+  "set hlsearch
+endif
+
 " Save and restore vim session
 fu! SaveSess()
   "execute 'call mkdir(~/.vim)'
@@ -123,6 +136,7 @@ set laststatus=2
 set timeoutlen=1000 ttimeoutlen=10
 
 " NERDTree
+let g:NERDTreeMinimalUI=1
 map <C-n> :NERDTreeTabsToggle<CR>
 
 " ale (async linting engine - richiede ambiente node attivo con package prettier installato globale)
@@ -148,17 +162,19 @@ let g:ctrlp_show_hidden = 1
 " vim-markdown
 let g:vim_markdown_folding_disabled=1
 
-" vim-gitgutter
-let g:gitgutter_max_signs=2000
+" vim-signify
+set updatetime=100
 
 " javascript and jsx
 "let g:javascript_plugin_flow = 1
 let g:javascript_plugin_flow = 0
+let g:javascript_plugin_jsdoc = 1
 let g:javascript_enable_domhtmlcss = 1
 let g:jsx_ext_required = 0
 
 " emmet
 let user_emmet_expandabbr_key = '<c-e>'
+let g:user_emmet_settings = {'javascript.jsx': {'extends' : 'jsx' }}
 
 "AIRLINE
 let g:airline#extensions#ale#enabled = 1
@@ -166,14 +182,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 "let g:airline_detect_whitespace = 0
 let g:airline_powerline_fonts = 1
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  colorscheme distinguished
-  syntax on
-  "set hlsearch
-endif
+let g:airline_theme = 'minimalist'
 
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
