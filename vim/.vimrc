@@ -21,7 +21,9 @@ Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'PhilRunninger/nerdtree-buffer-ops'
-Plugin 'jistr/vim-nerdtree-tabs'
+" Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-fugitive'
+Plugin 'moll/vim-bbye'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'godlygeek/tabular'
@@ -117,12 +119,17 @@ set vb
 " use the *real* full-height vertical bar to make solid lines
 set fillchars+=vert:│
 
+"map gn :bn<CR>
+"map gp :bp<CR>
+"map gd :bd<CR>
+"map gsn :sbn<CR>
+"map gsp :sbp<CR>
+"map gsd :sbd<CR>
+
 map gn :bn<CR>
-map gp :bp<CR>
-map gd :bd<CR>
-map gsn :sbn<CR>
-map gsp :sbp<CR>
-map gsd :sbd<CR>
+map gN :bp<CR>
+" use vim-bbye for buffer delete
+map gd :Bd<CR>
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -137,7 +144,16 @@ set timeoutlen=1000 ttimeoutlen=10
 
 " NERDTree
 let g:NERDTreeMinimalUI=1
-map <C-n> :NERDTreeTabsToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+" Open the existing NERDTree on each new tab.
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " ale (async linting engine - richiede ambiente node attivo con package prettier installato globale)
 let g:ale_linters = {'javascript': ['eslint']}
@@ -151,7 +167,7 @@ let g:ale_set_balloons = 1
 " let g:ale_javascript_eslint_options = '-c .eslintrc.json'
 let g:ale_fixers = {'javascript': ['prettier'], 'json': ['prettier'], 'json5': ['prettier'], 'css': ['prettier'], 'less': ['prettier']}
 let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5 --no-semi --print-width 120 --jsx-bracket-same-line --arrow-parens avoid'
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5 --no-semi --print-width 120 --bracket-same-line true --arrow-parens avoid'
 map F :ALEFix<cr>
 map E :ALELint<cr>
 
@@ -177,6 +193,8 @@ let user_emmet_expandabbr_key = '<c-e>'
 let g:user_emmet_settings = {'javascript.jsx': {'extends' : 'jsx' }}
 
 "AIRLINE
+" let gitBranch = trim(system("git rev-parse --is-inside-work-tree >> /dev/null 2>&1 && git rev-parse --abbrev-ref HEAD"))
+" let g:airline_section_b = gitBranch
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
