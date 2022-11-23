@@ -1,10 +1,10 @@
 
 " When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
+"if v:progname =~? "evim"
+"  finish
+"endif
 
-set nocompatible
+" set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -35,16 +35,19 @@ Plugin 'mhartington/oceanic-next'
 
 call vundle#end()
 
-if (has("termguicolors"))
-  set termguicolors
-endif
+" WORKAROUND vim within tmux
+" This is only necessary if you use 'set termguicolors'.
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" fixes glitch? in colors when using vim with tmux
+set background=dark
+set t_Co=256
+" END WORKAROUND vim within tmux
+set termguicolors
 
-" Switch syntax highlighting on, when the terminal has colors
-if &t_Co > 2 || has("gui_running")
-  colorscheme OceanicNext
-  syntax on
-  "set hlsearch
-endif
+colorscheme OceanicNext
+syntax on
+"set hlsearch
 
 " Save and restore vim session
 fu! SaveSess()

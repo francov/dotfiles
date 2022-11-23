@@ -12,3 +12,4 @@
 	enabled = true
 [merge]
 	renamelimit = 3129
+	tool = meld
