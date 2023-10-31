@@ -4,21 +4,22 @@
 
 local M = {}
 
----@type Base46HLGroupsList
 M.override = {
 	Comment = {
 		italic = true,
 	},
 
 	TbLineBufOn = {
-		-- fg = "#0B0E14",
-		-- bg = "#36A3D9",
-		underline = true,
-		blend = 0,
+		fg = "#36A3D9",
+		bg = "#2B2E34",
+		bold = true,
+	},
+
+	TbLineBufOnClose = {
+		bg = "#2B2E34",
 	},
 }
 
----@type HLTable
 M.add = {
 	NvimTreeOpenedFolderName = { fg = "green", bold = true },
 }
