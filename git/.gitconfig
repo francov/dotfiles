@@ -1,5 +1,5 @@
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log --color --graph --date=short --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen[%ad] %C(bold blue)<%an>%Creset' --abbrev-commit
   ll = log --date=short --pretty=format:"%C(yellow)%h%Cred%d\\ %C(green)[%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat --graph
 	co = checkout
 	st = status
