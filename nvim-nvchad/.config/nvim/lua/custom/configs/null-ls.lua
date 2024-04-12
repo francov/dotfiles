@@ -36,13 +36,21 @@ null_ls.setup({
 				"handlebars",
 			},
 		}),
+
 		formatting.stylua, -- lua formatter
+		formatting.black, -- python formatter
+
 		diagnostics.eslint_d.with({ -- js/ts linter
 			-- only enable eslint if root has .eslintrc.js
 			condition = function(utils)
 				return utils.root_has_file({ ".eslintrc.js", ".eslintrc.json", ".eslintrc" }) -- change file extension if you use something else
 			end,
 		}),
+
+		-- cpp
+		formatting.clang_format,
+		formatting.rustfmt,
+		diagnostics.cppcheck,
 	},
 
 	-- configure format on save

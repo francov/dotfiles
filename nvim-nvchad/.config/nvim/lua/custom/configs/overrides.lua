@@ -29,6 +29,8 @@ M.treesitter = {
 		"vim",
 		"dockerfile",
 		"gitignore",
+		"c",
+		"cpp",
 	},
 	indent = {
 		enable = true,
@@ -47,6 +49,7 @@ M.mason = {
 		-- lua stuff
 		"lua-language-server",
 		"stylua",
+		"pyright",
 
 		-- web dev stuff
 		"css-lsp",
@@ -56,6 +59,9 @@ M.mason = {
 		"prettier",
 		"eslint_d",
 		"emmet-ls",
+
+		-- C/C++
+		"clangd",
 	},
 }
 
