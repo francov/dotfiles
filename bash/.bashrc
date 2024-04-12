@@ -180,3 +180,6 @@ PS1="\$(node_version)\$([ '`id -u`' -eq 0 ] && echo -e '$COLOR_RED')\u\[$(tput s
 
 export TZ=":/etc/localtime"
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
