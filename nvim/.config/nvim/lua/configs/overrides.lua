@@ -132,6 +132,17 @@ M.mini_comment = {
       return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
     end,
   },
+  mappings = {
+    -- Normal and Visual modes
+    comment = "<C-c>",
+    -- Toggle comment on current line
+    comment_line = "<C-c>",
+    -- Toggle comment on visual selection
+    comment_visual = "<C-c>",
+    -- Define 'comment' textobject (like `dgc` - delete whole comment block)
+    -- Works also in Visual mode if mapping differs from `comment_visual`
+    textobject = "gc",
+  },
 }
 
 return M

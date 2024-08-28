@@ -19,8 +19,6 @@ map(
   { desc = "Auto trail extra spaces", noremap = true, silent = true }
 )
 
--- map("n", "<C-c>", "gcc", { desc = "Toggle comment", noremap = true })
-
 map(
   "i",
   "<C-e>",
