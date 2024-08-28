@@ -47,7 +47,7 @@ return {
   },
 
   -- override plugin configs
-  { "folke/trouble.nvim", opts = overrides.trouble },
+  { "folke/trouble.nvim", opts = { icons = {} } },
   { "williamboman/mason.nvim", opts = overrides.mason },
   { "nvim-treesitter/nvim-treesitter", dependencies = { "folke/trouble.nvim" }, opts = overrides.treesitter },
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },

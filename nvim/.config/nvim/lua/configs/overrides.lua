@@ -107,10 +107,6 @@ M.blankline = {
   },
 }
 
-M.trouble = {
-  icons = {},
-}
-
 M.ts_autotag = {
   autotag = {
     enable = true,

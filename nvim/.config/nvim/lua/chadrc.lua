@@ -29,30 +29,27 @@ M.base46 = {
       bg = "#2B2E34",
     },
   },
+}
 
+M.ui = {
   statusline = {
     theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
-    overriden_modules = function()
-      return {
-        -- add parent dir to filename
-        fileInfo = function()
-          local icon = " 󰈚 "
-          local filename = (vim.fn.expand "%" == "" and "Empty ")
-            or vim.fn.expand "%:p:h:t" .. "/" .. vim.fn.expand "%:t"
-          if filename ~= "Empty " then
-            local devicons_present, devicons = pcall(require, "nvim-web-devicons")
-
-            if devicons_present then
-              local ft_icon = devicons.get_icon(filename)
-              icon = (ft_icon ~= nil and " " .. ft_icon) or ""
-            end
-
-            filename = " " .. filename .. " "
+    modules = {
+      -- add parent dir to filename
+      file = function()
+        local icon = " 󰈚 "
+        local filename = (vim.fn.expand "%" == "" and "Empty ") or vim.fn.expand "%:p:h:t" .. "/" .. vim.fn.expand "%:t"
+        if filename ~= "Empty " then
+          local devicons_present, devicons = pcall(require, "nvim-web-devicons")
+          if devicons_present then
+            local ft_icon = devicons.get_icon(filename)
+            icon = (ft_icon ~= nil and " " .. ft_icon) or ""
           end
-          return "%#StText# " .. icon .. filename
-        end,
-      }
-    end,
+          filename = " " .. filename .. " "
+        end
+        return "%#StText# " .. icon .. filename
+      end,
+    },
   },
 }
 
