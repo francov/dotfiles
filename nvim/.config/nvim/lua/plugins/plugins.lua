@@ -50,6 +50,26 @@ return {
   { "folke/trouble.nvim", opts = { icons = {} } },
   { "williamboman/mason.nvim", opts = overrides.mason },
   { "nvim-treesitter/nvim-treesitter", dependencies = { "folke/trouble.nvim" }, opts = overrides.treesitter },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    lazy = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {
+      -- enable = false,
+      mode = "cursor", --cursor/topline
+    },
+  },
+  {
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen" },
+    keys = { -- Example mapping to toggle outline
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    opts = {
+      -- Your setup opts here
+    },
+  },
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
   { "lukas-reineke/indent-blankline.nvim", opts = overrides.blankline },
   { "https://github.com/farmergreg/vim-lastplace.git", lazy = false },

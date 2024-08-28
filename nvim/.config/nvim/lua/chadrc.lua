@@ -29,6 +29,11 @@ M.base46 = {
       bg = "#2B2E34",
     },
   },
+
+  hl_add = {
+    TreesitterContext = { bg = { "black", 9 } },
+    TreesitterContextLineNumber = { bg = { "black", 9 } },
+  },
 }
 
 M.ui = {
