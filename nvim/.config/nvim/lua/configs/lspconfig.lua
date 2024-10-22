@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
 
-local servers = { "tsserver", "html", "cssls", "clangd", "pyright" }
+local servers = { "ts_ls", "html", "cssls", "clangd", "pyright" }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -45,9 +45,9 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
   end,
 })
 
--- Ignore some tsserver diagnostics - SEE: https://github.com/LunarVim/LunarVim/discussions/4239
+-- Ignore some ts_ls diagnostics - SEE: https://github.com/LunarVim/LunarVim/discussions/4239
 -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
-local function filter_tsserver_diagnostics(_, result, ctx, config)
+local function filter_ts_ls_diagnostics(_, result, ctx, config)
   if result.diagnostics == nil then
     return
   end
@@ -63,4 +63,4 @@ local function filter_tsserver_diagnostics(_, result, ctx, config)
   end
   vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
 end
-vim.lsp.handlers["textDocument/publishDiagnostics"] = filter_tsserver_diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = filter_ts_ls_diagnostics
