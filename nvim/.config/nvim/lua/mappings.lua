@@ -4,6 +4,11 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode", nowait = true })
 map("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
+
+map("n", "<leader>gb", function()
+  require("gitsigns").blame_line()
+end, { desc = "Git blame line" })
+
 map("n", "<C-a>", "<esc>ggVG", { desc = "Select all" })
 map("n", "<Esc>", "<cmd>noh <CR>", { desc = "Clear highlights", silent = true })
 map(
