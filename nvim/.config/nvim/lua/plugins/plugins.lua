@@ -2,6 +2,11 @@ local overrides = require "configs.overrides"
 
 return {
   {
+    "hrsh7th/nvim-cmp",
+    lazy = false,
+    config = overrides.cmp,
+  },
+  {
     "stevearc/conform.nvim",
     event = { "VeryLazy", "BufWritePre" }, -- uncomment for format on save
     opts = require "configs.conform",
@@ -93,6 +98,17 @@ return {
     config = overrides.session_manager,
   },
 
+  {
+    "Exafunction/codeium.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      require("codeium").setup {}
+    end,
+  },
   -- {
   --   "iamcco/markdown-preview.nvim",
   --   lazy = true,

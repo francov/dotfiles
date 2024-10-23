@@ -145,4 +145,16 @@ M.mini_comment = {
   },
 }
 
+M.cmp = {
+  -- preselect = cmp.PreselectMode.None,
+  sources = {
+    { name = "codeium" },
+    { name = "nvim_lsp" },
+    { name = "buffer" },
+    { name = "path" },
+    { name = "luasnip" },
+    { name = "nvim_lua" },
+  },
+}
+
 return M
