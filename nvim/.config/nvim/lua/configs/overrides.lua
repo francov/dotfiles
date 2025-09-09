@@ -97,6 +97,12 @@ M.nvimtree = {
       -- Copy the file
       vim.fn.system { "cp", "-R", file_src, file_out }
     end, opts "copy_file_to")
+
+    vim.keymap.set("n", "q", function()
+      local node = api.tree.get_node_under_cursor()
+
+      vim.cmd("bd " .. node.absolute_path)
+    end, opts "close_buffer")
   end,
 }
 
