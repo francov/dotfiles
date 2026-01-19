@@ -1,28 +1,76 @@
--- load defaults i.e lua_lsp
+-- NOTE: If NvChad hasn't updated its core yet, the line below might still error.
+-- If it does, comment it out.
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
+local servers = { "ts_ls", "html", "cssls", "clangd", "pyright", "eslint" }
 
-local servers = { "ts_ls", "html", "cssls", "clangd", "pyright" }
+-------------------------------------------------------------------------
+-- 1. Setup LspAttach Autocommand (Replaces old on_attach)
+-------------------------------------------------------------------------
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    
+    -- Run NvChad's default attach (sets keymaps, etc.)
+    if nvlsp.on_attach then
+      nvlsp.on_attach(client, args.buf)
+    end
+    
+    if nvlsp.on_init then
+      nvlsp.on_init(client, args.buf)
+    end
+  end,
+})
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
+-------------------------------------------------------------------------
+-- 2. Configure and Enable Servers (Nvim 0.11+ Native)
+-------------------------------------------------------------------------
+for _, server in ipairs(servers) do
+  local opts = {
     capabilities = nvlsp.capabilities,
   }
+
+  -- Configurazione specifica SOLO per ts_ls
+  if server == "ts_ls" then
+    opts.handlers = {
+      ["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+        if result and result.diagnostics then
+          local ignored_codes = {
+            [80001] = true, -- CommonJS module...
+            [6133]  = true  -- declared but never read...
+          }
+          
+          -- Filtra creando una nuova tabella
+          local new_diagnostics = {}
+          for _, diagnostic in ipairs(result.diagnostics) do
+            if not ignored_codes[diagnostic.code] then
+              table.insert(new_diagnostics, diagnostic)
+            end
+          end
+          result.diagnostics = new_diagnostics
+        end
+        
+        -- Chiama la funzione nativa sicura di Neovim
+        vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+      end,
+    }
+  end
+
+  vim.lsp.config(server, opts)
+  vim.lsp.enable(server)
 end
 
--- Customize inline diagnostics
+-------------------------------------------------------------------------
+-- 3. Inline Diagnostics Configuration
+-------------------------------------------------------------------------
 vim.diagnostic.config {
   float = { border = "rounded" },
   virtual_text = false,
 }
+
 vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
 vim.api.nvim_create_autocmd({ "CursorHold" }, {
-  -- SEE: https://neovim.discourse.group/t/how-to-show-diagnostics-on-hover/3830/2
   pattern = "*",
   group = "lsp_diagnostics_hold",
   callback = function()
@@ -45,22 +93,3 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
   end,
 })
 
--- Ignore some ts_ls diagnostics - SEE: https://github.com/LunarVim/LunarVim/discussions/4239
--- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
-local function filter_ts_ls_diagnostics(_, result, ctx, config)
-  if result.diagnostics == nil then
-    return
-  end
-  local blacklisted_codes = { [80001] = true, [6133] = true }
-  local idx = 1
-  while idx <= #result.diagnostics do
-    local entry = result.diagnostics[idx]
-    if blacklisted_codes[entry.code] then
-      table.remove(result.diagnostics, idx)
-    else
-      idx = idx + 1
-    end
-  end
-  vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
-end
-vim.lsp.handlers["textDocument/publishDiagnostics"] = filter_ts_ls_diagnostics

@@ -48,7 +48,7 @@ M.mason = {
     "typescript-language-server",
     "deno",
     "prettier",
-    "eslint_d",
+    "eslint-lsp",
     "emmet-ls",
 
     -- C/C++

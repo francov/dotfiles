@@ -21,21 +21,12 @@ return {
 
   {
     "mfussenegger/nvim-lint",
-    event = "VeryLazy",
-    ft = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue",
-    },
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       linters_by_ft = {
-        javascript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        typescript = { "eslint_d" },
-        typescriptreact = { "eslint_d" },
-        vue = { "eslint_d" },
+        -- python = { "pylint" },
+        -- dockerfile = { "hadolint" },
+        -- markdown = { "markdownlint" },
       },
     },
     config = function(_, opts)
