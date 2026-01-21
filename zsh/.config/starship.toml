@@ -1,5 +1,24 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """
+$directory\
+${custom.git_branch_dynamic}\
+$git_status\
+$c\
+$cmake\
+$golang\
+$java\
+$kotlin\
+$lua\
+$nodejs\
+$python\
+$rust\
+$swift\
+$php\
+$cmd_duration\
+$line_break\
+$character"""
+
 [aws]
 symbol = " "
 
@@ -34,6 +53,7 @@ symbol = " "
 read_only = " 󰌾"
 style = "blue bold"
 truncate_to_repo = false
+truncation_length = 0
 
 [docker_context]
 symbol = " "
@@ -57,13 +77,42 @@ symbol = " "
 symbol = " "
 
 [git_branch]
+disabled = true
 symbol = " "
-format = "[$symbol$branch]($style) "
+# format = "[$symbol$branch]($style) "
+
+[custom.git_branch_dynamic]
+description = "Branch name colorato in base allo stato (Clean=Verde, Dirty=Arancio, Ahead=Giallo)"
+command = """
+BRANCH=$(git branch --show-current 2>/dev/null)
+# Controlliamo lo stato grezzo (porcelain)
+STATUS=$(git status --porcelain 2>/dev/null)
+# Controlliamo l'header per vedere se siamo 'ahead'
+HEADER=$(git status --porcelain -b 2>/dev/null)
+
+if [ -n "$STATUS" ]; then
+    # CASO 1: MODIFICHE PENDING O STAGED (Dirty)
+    # Colore Arancione (ANSI 208)
+    echo -e "\\e[1;38;5;208m $BRANCH\\e[0m"
+elif [[ "$HEADER" == *"ahead"* ]]; then
+    # CASO 2: COMMITTATO MA NON PUSHATO (Ahead)
+    # Colore Giallo
+    echo -e "\\e[1;33m $BRANCH\\e[0m"
+else
+    # CASO 3: WORKING TREE PULITO E SINCRONIZZATO
+    # Colore Verde
+    echo -e "\\e[1;32m $BRANCH\\e[0m"
+fi
+"""
+when = "git rev-parse --is-inside-work-tree 2> /dev/null"
+shell = ["bash", "--noprofile", "--norc"]
+format = "[$output]($style) "
 
 [git_commit]
 tag_symbol = '  '
 
 [git_status]
+disabled = true
 style = "214"
 deleted = "✘"
 modified = ""
@@ -74,7 +123,7 @@ conflicted = ""
 ahead = "⇡"
 behind = "⇣"
 diverged = "⇕"
-up_to_date = ""
+up_to_date = ""
 
 [cmd_duration]
 disabled = true
@@ -126,8 +175,8 @@ symbol = " "
 
 [nodejs]
 symbol = " "
+style = "green"
 format = "[$symbol$version]($style) "
-# format = "[$symbol($version )]($style)"
 
 [ocaml]
 symbol = " "

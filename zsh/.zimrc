@@ -9,7 +9,7 @@
 # Sets sane Zsh built-in environment options.
 zmodule environment
 # Provides handy git aliases and functions.
-zmodule git
+# zmodule git
 # Applies correct bindkeys for input events.
 zmodule input
 # Sets a custom terminal title.
@@ -27,7 +27,7 @@ zmodule utility
 # Exposes how long the last command took to run to prompts.
 # zmodule duration-info
 # Exposes git repository status information to prompts.
-zmodule git-info
+# zmodule git-info
 # A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
 # zmodule asciiship
 
